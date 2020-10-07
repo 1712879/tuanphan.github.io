@@ -249,13 +249,12 @@
 
                     $(".content").append("<h4>Tính lại trọng tâm: </h4><br/>");
                     for (let i = 0; i < mu.length; i++) {
-                         let temp = mu[i][0];
-                         // $(".content").append(
-                         //      `cluster ${i}: ${temp
-                         //           .map((item) => item.toFixed(1))
-                         //           .join(",")
-                         //           .replaceAll(",", " -- ")}`
-                         // );
+                         $(".content").append(
+                              `cluster ${i}: ${mu[i][0]
+                                   .map((item) => item.toFixed(1))
+                                   .join(",")
+                                   .replaceAll(",", " -- ")}`
+                         );
                          $(".content").append("<br/>");
                     }
                     $(".content").append("<br/>");
