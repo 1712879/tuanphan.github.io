@@ -247,20 +247,20 @@
 
                     $(".content").append("<br/>");
 
-                    $(".content").append("<h4>Tính lại trọng tâm: </h4><br/>");
-                    for (let i = 0; i < mu.length; i++) {
-                         // console.log(mu[i].join(","));
-                         let temp = mu[i][0];
-                         console.log(temp.map((item) => item.toFixed(1)));
-                         $(".content").append(
-                              `cluster ${i}: ${temp
-                                   .map((item) => item.toFixed(1))
-                                   .join(",")
-                                   .replaceAll(",", " -- ")}`
-                         );
-                         $(".content").append("<br/>");
-                    }
-                    $(".content").append("<br/>");
+                    // $(".content").append("<h4>Tính lại trọng tâm: </h4><br/>");
+                    // for (let i = 0; i < mu.length; i++) {
+                    //      // console.log(mu[i].join(","));
+                    //      let temp = mu[i][0];
+                    //      console.log(temp.map((item) => item.toFixed(1)));
+                    //      $(".content").append(
+                    //           `cluster ${i}: ${temp
+                    //                .map((item) => item.toFixed(1))
+                    //                .join(",")
+                    //                .replaceAll(",", " -- ")}`
+                    //      );
+                    //      $(".content").append("<br/>");
+                    // }
+                    // $(".content").append("<br/>");
                };
 
                const k_means_v2 = () => {
