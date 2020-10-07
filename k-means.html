@@ -251,9 +251,7 @@
                     for (let i = 0; i < mu.length; i++) {
                          $(".content").append(
                               `cluster ${i}: ${mu[i][0]
-                                   .map((item) => item.toFixed(1))
-                                   .join(",")
-                                   .replaceAll(",", " -- ")}`
+                                   `
                          );
                          $(".content").append("<br/>");
                     }
