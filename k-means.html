@@ -250,7 +250,9 @@
                     $(".content").append("<h4>Tính lại trọng tâm: </h4><br/>");
                     for (let i = 0; i < mu.length; i++) {
                          $(".content").append(
-                              `cluster ${i}: ${mu[i][0].join(" -- ")}`
+                              `cluster ${i}: ${mu[i][0]
+                                   .map((item) => item.toFixed(1))
+                                   .join(" -- ")}`
                          );
                          $(".content").append("<br/>");
                     }
