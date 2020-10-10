@@ -137,8 +137,7 @@
                };
 
                // //Sử dụng thuật toán
-               const loadSampleData = () => {
-                    X = [
+               const X_sample = [
                          [6, 5, 10],
                          [9, 10, 8],
                          [8, 3, 7],
@@ -160,13 +159,15 @@
                          [4, 10, 7],
                          [1, 3, 4],
                     ];
+               const loadSampleData = (X = X_sample, value = "0,8,19") => {
+                    
                     for (let i = 0; i < X.length; i++) {
                          if ($(".cluster").length <= i) {
                               appendInput();
                          }
                          $(".cluster")[i].value = X[i].join(",");
                     }
-                    document.querySelector("#diemTrungTam").value = "0,8,19";
+                    document.querySelector("#diemTrungTam").value = value;
                };
 
                const k_means = () => {
@@ -203,10 +204,9 @@
                     $(".content").append(
                          `<h2 style='color: #d35400;'>Các mẫu trong cùng nhóm là:<h2>`
                     );
-                    const nhom0 = c_min_loss.filter((item, index) => item == 0);
-                    const nhom1 = c_min_loss.filter((item, index) => item == 1);
-                    const nhom2 = c_min_loss.filter((item, index) => item == 2);
-                    for (let i = 0; i < 3; i++) {
+                    const soNhom = parseInt(document.querySelector("#tongSoNhom").value);
+                    // console.log(soNhom)
+                    for (let i = 0; i < soNhom; i++) {
                          let str = "";
                          for (let j = 0; j < c_min_loss.length; j++) {
                               if (c_min_loss[j] == i) {
@@ -230,7 +230,7 @@
                          </table>`
                     );
 
-                    for (let j = 0; j < 3; j++) {
+                    for (let j = 0; j < mu.length; j++) {
                          let data_point = "";
                          for (i = 0; i < matrixCluster.length; i++) {
                               if (matrixCluster[i] == j) {
@@ -249,10 +249,14 @@
 
                     $(".content").append("<h4>Tính lại trọng tâm: </h4><br/>");
                     for (let i = 0; i < mu.length; i++) {
+                         // console.log(mu[i].join(","));
+                         let temp = mu[i][0];
+                         // console.log(temp.map((item) => item.toFixed(1)));
                          $(".content").append(
-                              `cluster ${i}: ${mu[i][0]
+                              `cluster ${i}: ${temp
                                    .map((item) => item.toFixed(1))
-                                   .join(" -- ")}`
+                                   .join(",")
+                                   .replaceAll(",", " -- ")}`
                          );
                          $(".content").append("<br/>");
                     }
@@ -269,6 +273,7 @@
                     const nSoDiemNhom = diemTrungTam.length;
                     const matrixV2 = [];
                     readData(matrixV2);
+                    // console.log(matrixV2)
 
                     const matrix = new ML.Matrix(matrixV2);
                     min_loss = Infinity;
@@ -278,6 +283,7 @@
                     for (let i = 0; i < nSoDiemNhom; i++) {
                          mu.push(matrix.getRowVector(diemTrungTam[i]));
                     }
+                    // console.log('mu length: ', mu.length)
                     // mu0_position = 0;
                     // mu1_position = 8;
                     // mu2_position = 19;
@@ -313,13 +319,18 @@
                                    }
                               c.push(ci);
                          }
-
-                         //Bước 3
-                         new_mu = [
-                              new ML.Matrix([new Array(nSoDiemNhom).fill(0)]),
-                              new ML.Matrix([new Array(nSoDiemNhom).fill(0)]),
-                              new ML.Matrix([new Array(nSoDiemNhom).fill(0)]),
-                         ];
+                         new_mu = [];
+                         const a = ($(".cluster")[0]).value.split(',').length;
+                         console.log(a)
+                         for(let i = 0; i < nSoDiemNhom; i++){
+                         	new_mu.push(new ML.Matrix([new Array(a).fill(0)]))
+                         }
+                         // //Bước 3
+                         // new_mu = [
+                         //      new ML.Matrix([new Array(nSoDiemNhom).fill(0)]),
+                         //      new ML.Matrix([new Array(nSoDiemNhom).fill(0)]),
+                         //      new ML.Matrix([new Array(nSoDiemNhom).fill(0)]),
+                         // ];
                          cluster_size = new Array(nSoDiemNhom).fill(0);
                          for (i = 0; i < cluster; i++) {
                               cluster_size[c[i]]++;
@@ -331,7 +342,7 @@
                          printStep(c, new_mu, counter);
                          //Kiểm tra điều kiện dừng
                          isEqual = true;
-                         for (k = 0; k < 3; k++)
+                         for (k = 0; k < new_mu.length; k++)
                               if (
                                    JSON.stringify(mu[k].getRow(0)) !=
                                    JSON.stringify(new_mu[k].getRow(0))
